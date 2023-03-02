@@ -278,7 +278,18 @@ public class SQLite {
         } catch (Exception ex) {}
         return users;
     }
-    
+    //GET SPECIFIC USER 
+    public User getUser(String username){
+        String sql = "SELECT * FROM users WHERE username='" +username+ "';";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()){
+            stmt.execute(sql);
+            
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
     public void addUser(String username, String password, int role) {
         String sql = "INSERT INTO users(username,password,role) VALUES('" + username + "','" + password + "','" + role + "')";
         

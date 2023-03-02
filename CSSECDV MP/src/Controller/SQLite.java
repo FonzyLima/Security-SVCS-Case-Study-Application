@@ -279,6 +279,7 @@ public class SQLite {
         return users;
     }
     //GET SPECIFIC USER 
+    //NOT COMPLETE
     public User getUser(String username){
         String sql = "SELECT * FROM users WHERE username='" +username+ "';";
         

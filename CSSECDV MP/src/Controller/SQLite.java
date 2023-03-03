@@ -285,7 +285,7 @@ public class SQLite {
         
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()){
-            stmt.execute(sql);
+            
             
         } catch (Exception ex) {
             System.out.print(ex);

@@ -16,7 +16,7 @@ public class Login extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         usernameFld = new javax.swing.JTextField();
-        passwordFld = new javax.swing.JTextField();
+        passwordFld = new javax.swing.JPasswordField();
         registerBtn = new javax.swing.JButton();
         loginBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -95,7 +95,7 @@ public class Login extends javax.swing.JPanel {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         //NOT DONE NOT CORRECT
         String username = usernameFld.getText().toLowerCase();
-        String password = passwordFld.getText();
+        String password = String.valueOf(passwordFld.getPassword());
         User user = frame.main.sqlite.getUser(username);
         if (username.equals("")){
             System.out.println("ENTER USERNAME");
@@ -131,7 +131,7 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JTextField passwordFld;
+    private javax.swing.JPasswordField passwordFld;
     private javax.swing.JButton registerBtn;
     private javax.swing.JTextField usernameFld;
     // End of variables declaration//GEN-END:variables

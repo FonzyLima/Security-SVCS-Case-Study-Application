@@ -278,19 +278,7 @@ public class SQLite {
         } catch (Exception ex) {}
         return users;
     }
-    //GET SPECIFIC USER 
-    //NOT COMPLETE
-    public User getUser(String username){
-        String sql = "SELECT * FROM users WHERE username='" +username+ "';";
-        
-        try (Connection conn = DriverManager.getConnection(driverURL);
-            Statement stmt = conn.createStatement()){
-            
-            
-        } catch (Exception ex) {
-            System.out.print(ex);
-        }
-    }
+    
     public void addUser(String username, String password, int role) {
         String sql = "INSERT INTO users(username,password,role) VALUES('" + username + "','" + password + "','" + role + "')";
         
@@ -328,5 +316,24 @@ public class SQLite {
             System.out.print(ex);
         }
         return product;
+    }
+    //GET SPECIFIC USER 
+    //NOT COMPLETE
+    public User getUser(String username){
+        String sql = "SELECT id, username, password, role, locked FROM users WHERE username='" +username+ "';";
+        User user = null;
+        try(Connection conn = DriverManager.getConnection(driverURL);
+           Statement stmt = conn.createStatement();
+           ResultSet rs = stmt.executeQuery(sql)){
+           user = new User(rs.getInt("id"),
+                       rs.getString("username"),
+                       rs.getString("password"),
+                          rs.getInt("role"),
+                        rs.getInt("locked"));
+        } catch(Exception ex){
+            System.out.print(ex);
+        }
+        return user;
+       
     }
 }

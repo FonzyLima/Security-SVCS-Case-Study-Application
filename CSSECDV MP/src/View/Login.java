@@ -1,6 +1,8 @@
 
 package View;
-
+import Model.User;
+import javax.swing.BorderFactory;
+import java.awt.Color;
 public class Login extends javax.swing.JPanel {
 
     public Frame frame;
@@ -85,8 +87,26 @@ public class Login extends javax.swing.JPanel {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         //NOT DONE NOT CORRECT
         String username = usernameFld.getText().toLowerCase();
-        String password = passwordFld.getText().toLowerCase();
-        frame.mainNav();
+        String password = passwordFld.getText();
+        User user = frame.main.sqlite.getUser(username);
+        if username.equals(""){
+            System.out.println("ENTER USERNAME");
+        }
+        if password.equals(""){
+            System.out.println("ENTER PASSWORD");
+        }
+        
+        if (user==null){
+            System.out.println("USERNAME DOES NOT EXIST");
+        }
+        else if(!password.equals(user.getPassword())){
+            System.out.println("WRONG PASSWORD");
+        }
+        else{
+            System.out.println("SUCCESS");
+            frame.mainNav();
+        }
+        
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed

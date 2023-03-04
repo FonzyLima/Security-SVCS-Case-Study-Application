@@ -1,12 +1,11 @@
 
 package View;
 import Model.User;
-import javax.swing.BorderFactory;
-import java.awt.Color;
+import Controller.Password;
 public class Login extends javax.swing.JPanel {
 
     public Frame frame;
-    
+    public Password passwordClass = new Password();
     public Login() {
         initComponents();
     }
@@ -107,15 +106,12 @@ public class Login extends javax.swing.JPanel {
             jLabel2.setText("Please fill in all fields");
         }
         
-        if (user==null || !password.equals(user.getPassword())){
-            jLabel2.setText("Login failed; Invalid username or password");
-        }
-        else if(!password.equals(user.getPassword())){
-            System.out.println("WRONG PASSWORD");
+        if (user==null || !passwordClass.hashPassword(password).equals(user.getPassword())){
             jLabel2.setText("Login failed; Invalid username or password");
         }
         else{
-            System.out.println("SUCCESS");
+            usernameFld.setText("");
+            passwordFld.setText("");
             jLabel2.setText("");
             frame.mainNav();
         }

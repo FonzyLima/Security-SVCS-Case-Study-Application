@@ -108,20 +108,44 @@ public class Login extends javax.swing.JPanel {
         String username = usernameFld.getText().toLowerCase();
         String password = String.valueOf(passwordFld.getPassword());
         User user = frame.main.sqlite.getUser(username);
+        boolean login = false;
         if (username.equals("") || password.equals("")){
             System.out.println("ENTER USERNAME");
             jLabel2.setText("Please fill in all fields");
         }
         
-        if (user==null || !passwordClass.hashPassword(password).equals(user.getPassword())){
-            jLabel2.setText("Login failed; Invalid username or password");
+        if (user!=null){
+            if(user.getLocked()==1){
+                System.out.println(user.getLocked());
+                jLabel2.setText("Too many login attempts. Account is locked. Press Forgot Password for account recovery process");
+                login = false;
+                
+            }
+            else if(!passwordClass.hashPassword(password).equals(user.getPassword())){
+                if(user.getAttempts()<5){
+                    
+                    frame.main.sqlite.updateUserAttempts(username,user.getAttempts()+1 );
+                    user.setAttempts(user.getAttempts()+1);
+                }
+                if(user.getAttempts()==5){
+                    frame.main.sqlite.updateUserLocked(username, 1);
+                }
+                jLabel2.setText("Login failed; Invalid username or password");
+            }
+            
+            else{
+            
+                frame.main.sqlite.updateUserAttempts(username,0);
+                usernameFld.setText("");
+                passwordFld.setText("");
+                jLabel2.setText("");
+                frame.mainNav();
+            }
         }
         else{
-            usernameFld.setText("");
-            passwordFld.setText("");
-            jLabel2.setText("");
-            frame.mainNav();
+            jLabel2.setText("Login failed; Invalid username or password");
         }
+        
         
     }//GEN-LAST:event_loginBtnActionPerformed
 
@@ -135,6 +159,19 @@ public class Login extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String username = usernameFld.getText().toLowerCase();
+        
+        User user = frame.main.sqlite.getUser(username);
+        if (user!=null){
+            jLabel2.setText("The support team has been notified and will contact you for the next steps of your password recovery process");
+        }
+        else if (username.equals("")){
+            jLabel2.setText("Please input your username");
+        }
+        else{
+            jLabel2.setText("Account does not exist. Register an account");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

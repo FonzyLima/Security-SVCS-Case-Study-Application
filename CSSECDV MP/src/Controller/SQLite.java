@@ -87,6 +87,7 @@ public class SQLite {
             + " password TEXT NOT NULL,\n"
             + " role INTEGER DEFAULT 2,\n"
             + " locked INTEGER DEFAULT 0\n"
+            + " attempts INTEGER DEFAULT 0,\n"
             + ");";
 
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -273,7 +274,9 @@ public class SQLite {
                                    rs.getString("username"),
                                    rs.getString("password"),
                                    rs.getInt("role"),
-                                   rs.getInt("locked")));
+                                   rs.getInt("locked"),
+                                   rs.getInt("attempts")));
+                                  
             }
         } catch (Exception ex) {}
         return users;
@@ -302,7 +305,25 @@ public class SQLite {
             System.out.print(ex);
         }
     }
-    
+    public void updateUserAttempts(String username, int attempts){
+        String sql = "UPDATE users SET attempts ="+attempts+" WHERE username='"+username+"';";
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+        
+    }
+    public void updateUserLocked(String username,int locked){
+        String sql = "UPDATE users SET locked ="+locked+" WHERE username='"+username+"';";
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
     public Product getProduct(String name){
         String sql = "SELECT name, stock, price FROM product WHERE name='" + name + "';";
         Product product = null;
@@ -320,7 +341,7 @@ public class SQLite {
     //GET SPECIFIC USER 
     //NOT COMPLETE
     public User getUser(String username){
-        String sql = "SELECT id, username, password, role, locked FROM users WHERE username='" +username+ "';";
+        String sql = "SELECT id, username, password, role, locked,attempts FROM users WHERE username='" +username+ "';";
         User user = null;
         try(Connection conn = DriverManager.getConnection(driverURL);
            Statement stmt = conn.createStatement();
@@ -329,7 +350,8 @@ public class SQLite {
                        rs.getString("username"),
                        rs.getString("password"),
                           rs.getInt("role"),
-                        rs.getInt("locked"));
+                        rs.getInt("locked"),
+                        rs.getInt("attempts"));
         } catch(Exception ex){
             System.out.print(ex);
         }

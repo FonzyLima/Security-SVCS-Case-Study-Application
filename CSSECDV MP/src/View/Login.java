@@ -116,6 +116,7 @@ public class Login extends javax.swing.JPanel {
         }
         else{
             System.out.println("SUCCESS");
+            jLabel2.setText("");
             frame.mainNav();
         }
         

@@ -108,17 +108,17 @@ public class Login extends javax.swing.JPanel {
         String username = usernameFld.getText().toLowerCase();
         String password = String.valueOf(passwordFld.getPassword());
         User user = frame.main.sqlite.getUser(username);
-        boolean login = false;
+
         if (username.equals("") || password.equals("")){
             System.out.println("ENTER USERNAME");
             jLabel2.setText("Please fill in all fields");
         }
         
-        if (user!=null){
+        else if (user!=null){
             if(user.getLocked()==1){
                 System.out.println(user.getLocked());
                 jLabel2.setText("Too many login attempts. Account is locked. Press Forgot Password for account recovery process");
-                login = false;
+             
                 
             }
             else if(!passwordClass.hashPassword(password).equals(user.getPassword())){
@@ -150,6 +150,9 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        usernameFld.setText("");
+        passwordFld.setText("");
+        jLabel2.setText("");
         frame.registerNav();
     }//GEN-LAST:event_registerBtnActionPerformed
 

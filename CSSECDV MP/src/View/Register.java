@@ -146,6 +146,10 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        usernameFld.setText("");
+        passwordFld.setText("");
+        confpassFld.setText("");
+        jLabel2.setText("");
         frame.loginNav();
     }//GEN-LAST:event_backBtnActionPerformed
 

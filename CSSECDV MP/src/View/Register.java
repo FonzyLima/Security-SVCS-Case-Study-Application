@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Register extends javax.swing.JPanel {
 
     public Frame frame;
-    public Password passwordHash;
+    public Password passwordClass = new Password();
     public Register() {
         initComponents();
     }
@@ -107,15 +107,35 @@ public class Register extends javax.swing.JPanel {
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         ArrayList<User> users = frame.main.sqlite.getUsers();
         String username = usernameFld.getText().toLowerCase();
+        String password = passwordFld.getText();
+        String confPass = confpassFld.getText();
         boolean correct = true;
+        
+        //Username rules
+        if(username.length()<5 || !username.matches("[a-zA-z][a-zA-Z0-9]*")){
+            jLabel2.setText("Username must be between 4 and 50 characters and can only contain letters and numbers. The first character must be a letter.");
+            correct = false;
+        }
+        //check if username is duplicate
         for(int i = 0;i<users.size();i++){
             if(username.equals(users.get(i).getUsername())){
                 jLabel2.setText("Username is already taken. Please create another one");
                 correct = false;
             }
         }
+        if(!passwordClass.isPasswordStrong(password)){
+            jLabel2.setText("Your password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+            correct=false;
+        }
+        //check password match
+        if(!password.equals(confPass)){
+            jLabel2.setText("Passwords do not match.");
+            correct=false;
+        }
+        
         if(correct){
-            frame.registerAction(usernameFld.getText(), passwordFld.getText(), confpassFld.getText());
+            jLabel2.setText("");
+            frame.registerAction(username, passwordClass.hashPassword(password), confPass);
             frame.loginNav();
             
         }

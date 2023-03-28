@@ -246,18 +246,33 @@ public class Frame extends javax.swing.JFrame {
     
     public void mainNav(){
         frameView.show(Container, "homePnl");
+     
     }
     
     public void loginNav(){
         frameView.show(Container, "loginPnl");
+        
     }
     
     public void registerNav(){
         frameView.show(Container, "registerPnl");
     }
     
+    
     public void registerAction(String username, String password, String confpass){
         main.sqlite.addUser(username, password);
+    }
+    public void disableSection(int role){
+        if(role==2){
+            adminBtn.setEnabled(false);
+            managerBtn.setEnabled(false);
+            staffBtn.setEnabled(false);
+            Content.remove(adminHomePnl);
+            Content.remove(managerHomePnl);
+            Content.remove(staffHomePnl);
+            
+            
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

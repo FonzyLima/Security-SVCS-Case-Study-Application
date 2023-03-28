@@ -139,6 +139,7 @@ public class Login extends javax.swing.JPanel {
                 usernameFld.setText("");
                 passwordFld.setText("");
                 jLabel2.setText("");
+                frame.disableSection(user.getRole());
                 frame.mainNav();
             }
         }

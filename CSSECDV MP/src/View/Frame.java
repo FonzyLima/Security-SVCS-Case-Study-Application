@@ -269,9 +269,15 @@ public class Frame extends javax.swing.JFrame {
             staffBtn.setEnabled(false);
             Content.remove(adminHomePnl);
             Content.remove(managerHomePnl);
-            Content.remove(staffHomePnl);
-            
-            
+            Content.remove(staffHomePnl);     
+        }
+        else if(role==3){
+            clientBtn.setEnabled(false);
+            adminBtn.setEnabled(false);
+            managerBtn.setEnabled(false);
+            Content.remove(clientHomePnl);
+            Content.remove(adminHomePnl);
+            Content.remove(managerHomePnl);
         }
     }
 

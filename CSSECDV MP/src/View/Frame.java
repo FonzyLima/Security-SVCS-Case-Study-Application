@@ -264,6 +264,8 @@ public class Frame extends javax.swing.JFrame {
     }
     public void disableSection(int role){
         if(role==2){
+            clientBtn.setEnabled(true);
+            Content.add(clientHomePnl);
             adminBtn.setEnabled(false);
             managerBtn.setEnabled(false);
             staffBtn.setEnabled(false);
@@ -272,6 +274,8 @@ public class Frame extends javax.swing.JFrame {
             Content.remove(staffHomePnl);     
         }
         else if(role==3){
+            staffBtn.setEnabled(true);
+            Content.add(staffHomePnl);
             clientBtn.setEnabled(false);
             adminBtn.setEnabled(false);
             managerBtn.setEnabled(false);
@@ -280,6 +284,8 @@ public class Frame extends javax.swing.JFrame {
             Content.remove(managerHomePnl);
         }
         else if(role==4){
+            managerBtn.setEnabled(true);
+            Content.add(managerHomePnl);
             clientBtn.setEnabled(false);
             adminBtn.setEnabled(false);
             staffBtn.setEnabled(false);
@@ -288,13 +294,14 @@ public class Frame extends javax.swing.JFrame {
             Content.remove(staffHomePnl); 
         }
         else if(role==5){
+            adminBtn.setEnabled(true);
+            Content.add(adminHomePnl);
             clientBtn.setEnabled(false);
             staffBtn.setEnabled(false);
             managerBtn.setEnabled(false);
             Content.remove(clientHomePnl);
             Content.remove(staffHomePnl);
-            Content.remove(managerHomePnl);
-            
+            Content.remove(managerHomePnl);        
         }
     }
 

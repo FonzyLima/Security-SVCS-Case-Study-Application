@@ -279,6 +279,23 @@ public class Frame extends javax.swing.JFrame {
             Content.remove(adminHomePnl);
             Content.remove(managerHomePnl);
         }
+        else if(role==4){
+            clientBtn.setEnabled(false);
+            adminBtn.setEnabled(false);
+            staffBtn.setEnabled(false);
+            Content.remove(clientHomePnl);
+            Content.remove(adminHomePnl);
+            Content.remove(staffHomePnl); 
+        }
+        else if(role==5){
+            clientBtn.setEnabled(false);
+            staffBtn.setEnabled(false);
+            managerBtn.setEnabled(false);
+            Content.remove(clientHomePnl);
+            Content.remove(staffHomePnl);
+            Content.remove(managerHomePnl);
+            
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

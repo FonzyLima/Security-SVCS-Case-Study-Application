@@ -350,7 +350,7 @@ public class SQLite {
         }
     }
     
-    public void updateProduct(String initName, String newName, int stock, float price){
+    public void updateProduct(String initName, String newName, int stock, double price){
         String sql = "UPDATE product SET name='" + newName + "', stock = " + stock + ", price=" + price + " WHERE name='" + initName + "';";
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {

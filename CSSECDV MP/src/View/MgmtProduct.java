@@ -267,11 +267,19 @@ public class MgmtProduct extends javax.swing.JPanel {
             };
 
             int result = JOptionPane.showConfirmDialog(null, message, "EDIT PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
-
+            String oldName = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
             if (result == JOptionPane.OK_OPTION) {
                 System.out.println(nameFld.getText());
                 System.out.println(stockFld.getText());
                 System.out.println(priceFld.getText());
+                if(nameFld.getText().equals("")){
+                    System.out.println("ENTER A PRODUCT NAME");
+                }
+                else{
+                    sqlite.updateProduct(oldName, nameFld.getText(), Integer.parseInt(stockFld.getText()), Double.parseDouble(priceFld.getText()));
+                    
+                }
+                
             }
         }
     }//GEN-LAST:event_editBtnActionPerformed
@@ -281,7 +289,9 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE PRODUCT", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
-                System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0)); 
+                sqlite.removeProduct(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                
             }
         }
     }//GEN-LAST:event_deleteBtnActionPerformed

@@ -235,6 +235,20 @@ public class MgmtProduct extends javax.swing.JPanel {
             System.out.println(nameFld.getText());
             System.out.println(stockFld.getText());
             System.out.println(priceFld.getText());
+            if(sqlite.getProduct(nameFld.getText()) != null){
+                System.out.println("PRODUCT ALREADY THERE");
+            }
+            else{
+                if(nameFld.getText().equals("")){
+                    System.out.println("ENTER A PRODUCT NAME");
+                }
+                else{
+                    sqlite.addProduct(nameFld.getText(), Integer.parseInt(stockFld.getText()), Double.parseDouble(priceFld.getText()));
+                    
+                }
+               
+            }
+            
         }
     }//GEN-LAST:event_addBtnActionPerformed
 

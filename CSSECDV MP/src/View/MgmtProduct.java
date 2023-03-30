@@ -35,7 +35,7 @@ public class MgmtProduct extends javax.swing.JPanel {
 //        deleteBtn.setVisible(false);
     }
 
-    public void init(){
+    public void init(int role){
         //      CLEAR TABLE
         for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
             tableModel.removeRow(0);
@@ -48,6 +48,20 @@ public class MgmtProduct extends javax.swing.JPanel {
                 products.get(nCtr).getName(), 
                 products.get(nCtr).getStock(), 
                 products.get(nCtr).getPrice()});
+        }
+        if(role==2){
+            addBtn.setEnabled(false);
+            editBtn.setEnabled(false);
+            deleteBtn.setEnabled(false);
+        }
+        else if (role==3 || role==4){
+            purchaseBtn.setEnabled(false);
+        }
+        else{
+            addBtn.setEnabled(false);
+            editBtn.setEnabled(false);
+            deleteBtn.setEnabled(false);
+            purchaseBtn.setEnabled(false);
         }
     }
     
@@ -172,6 +186,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                     .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
 
     private void purchaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchaseBtnActionPerformed
         if(table.getSelectedRow() >= 0){

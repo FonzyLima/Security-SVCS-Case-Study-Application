@@ -338,6 +338,9 @@ public class SQLite {
         }
         return product;
     }
+    public void removeProduct(String name{
+    
+    }
     //GET SPECIFIC USER 
     //NOT COMPLETE
     public User getUser(String username){

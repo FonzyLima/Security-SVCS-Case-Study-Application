@@ -338,8 +338,37 @@ public class SQLite {
         }
         return product;
     }
-    public void removeProduct(String name{
+    public void removeProduct(String name){
+        String sql = "DELETE FROM product WHERE name='"+name+"';";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Product " + name + " has been deleted.");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
     
+    public void updateProduct(String initName, String newName, int stock, float price){
+        String sql = "UPDATE product SET name='" + newName + "', stock = " + stock + ", price=" + price + " WHERE name='" + initName + "';";
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println(initName + " has been updated.");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    public void updateProductStock(String name, int stock){
+        String sql = "UPDATE product SET stock = " + stock + " WHERE name = '" + name + "';";
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println(name + " has been updated.");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
     }
     //GET SPECIFIC USER 
     //NOT COMPLETE

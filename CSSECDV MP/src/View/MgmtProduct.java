@@ -198,8 +198,19 @@ public class MgmtProduct extends javax.swing.JPanel {
             };
 
             int result = JOptionPane.showConfirmDialog(null, message, "PURCHASE PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
-
+            String productSelected = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
+            int quantitySelected = Integer.parseInt(stockFld.getText());
+            int productStock = Integer.parseInt(tableModel.getValueAt(table.getSelectedRow(), 1).toString());
             if (result == JOptionPane.OK_OPTION) {
+                if(quantitySelected > productStock || quantitySelected == 0){
+                    System.out.println("WRONG QUANTITY");
+                }
+                else{
+                    sqlite.updateProductStock(productSelected, productStock-quantitySelected);
+                    System.out.println("PURCHASED "+productSelected);
+                    //tableModel.fireTableDataChanged();
+                    //table.repaint();
+                }
                 System.out.println(stockFld.getText());
             }
         }

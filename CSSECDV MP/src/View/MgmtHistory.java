@@ -202,7 +202,7 @@ public class MgmtHistory extends javax.swing.JPanel {
             for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
                 tableModel.removeRow(0);
             }
-            sqlite.addLogs("HISTORY", CurrentUserSession.currentUser, "");
+            sqlite.addLogs("HISTORY", CurrentUserSession.currentUser, "User searched purchase history for ");
 //          LOAD CONTENTS
             if(CurrentUserSession.role == 2){
                 ArrayList<History> history = sqlite.getHistoryByUserAndProduct(CurrentUserSession.currentUser,searchFld.getText());
@@ -223,6 +223,7 @@ public class MgmtHistory extends javax.swing.JPanel {
                         });
                     }
                 }
+                sqlite.addLogs("HISTORY", CurrentUserSession.currentUser, "Searched purchase history for "+searchFld.getText());
             }
             else{
                 ArrayList<History> history = sqlite.getHistoryByUser(searchFld.getText());
@@ -246,7 +247,7 @@ public class MgmtHistory extends javax.swing.JPanel {
                         });
                     }
                 }
-                
+                sqlite.addLogs("HISTORY", CurrentUserSession.currentUser, "Searched purchase history for "+searchFld.getText());
                 
             }
             

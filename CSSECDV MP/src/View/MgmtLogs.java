@@ -7,6 +7,7 @@ package View;
 
 import Controller.SQLite;
 import Model.Logs;
+import Model.CurrentUserSession;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.time.Instant;
@@ -137,6 +138,7 @@ public class MgmtLogs extends javax.swing.JPanel {
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         sqlite.deleteLogs();
+        sqlite.addLogs("LOGS", CurrentUserSession.currentUser, "Cleared logs");
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void debugBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugBtnActionPerformed

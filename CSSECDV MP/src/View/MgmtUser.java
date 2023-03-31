@@ -230,7 +230,7 @@ public class MgmtUser extends javax.swing.JPanel {
                 
                 sqlite.updateUserLocked(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), locked);
                 sqlite.updateUserAttempts(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 0);
-                sqlite.addLogs("USER", tableModel.getValueAt(table.getSelectedRow(), 0).toString(), state+"ed "+tableModel.getValueAt(table.getSelectedRow(), 0).toString()+"'s Account");
+                sqlite.addLogs("USER", tableModel.getValueAt(table.getSelectedRow(), 0).toString(), state+"ed "+tableModel.getValueAt(table.getSelectedRow(), 0).toString()+"s Account");
             } 
             init();
         }

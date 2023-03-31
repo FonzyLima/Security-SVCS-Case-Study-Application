@@ -202,7 +202,7 @@ public class MgmtHistory extends javax.swing.JPanel {
             for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
                 tableModel.removeRow(0);
             }
-
+            sqlite.addLogs("HISTORY", CurrentUserSession.currentUser, "");
 //          LOAD CONTENTS
             if(CurrentUserSession.role == 2){
                 ArrayList<History> history = sqlite.getHistoryByUserAndProduct(CurrentUserSession.currentUser,searchFld.getText());

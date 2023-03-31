@@ -126,11 +126,12 @@ public class Login extends javax.swing.JPanel {
             }
             else if(!passwordClass.hashPassword(password).equals(user.getPassword())){
                 if(user.getAttempts()<5){
-                    
+                    frame.main.sqlite.addLogs("NOTICE", username, username+" Failed login attempt");
                     frame.main.sqlite.updateUserAttempts(username,user.getAttempts()+1 );
                     user.setAttempts(user.getAttempts()+1);
                 }
                 if(user.getAttempts()==5){
+                    frame.main.sqlite.addLogs("NOTICE", username, username+" Account locked");
                     frame.main.sqlite.updateUserLocked(username, 1);
                 }
                 jLabel2.setText("Login failed; Invalid username or password");
@@ -142,6 +143,7 @@ public class Login extends javax.swing.JPanel {
                 usernameFld.setText("");
                 passwordFld.setText("");
                 jLabel2.setText("");
+                frame.main.sqlite.addLogs("NOTICE", username, username+" Successfully logged in");
                 frame.mainNav(user);
             }
         }

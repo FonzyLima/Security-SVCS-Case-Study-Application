@@ -161,8 +161,10 @@ public class SQLite {
         }
     }
     
-    public void addLogs(String event, String username, String desc, String timestamp) {
-        String sql = "INSERT INTO logs(event,username,desc,timestamp) VALUES('" + event + "','" + username + "','" + desc + "','" + timestamp + "')";
+    public void addLogs(String event, String username, String desc) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        
+        String sql = "INSERT INTO logs(event,username,desc,timestamp) VALUES('" + event + "','" + username + "','" + desc + "','" + timestamp.toString() + "')";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()){
@@ -337,7 +339,7 @@ public class SQLite {
     }
     
     public ArrayList<User> getUsers(){
-        String sql = "SELECT id, username, password, role, locked FROM users;";
+        String sql = "SELECT id, username, password, role, locked, attempts FROM users;";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);

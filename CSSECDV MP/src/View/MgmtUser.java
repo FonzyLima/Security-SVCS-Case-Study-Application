@@ -7,6 +7,7 @@ package View;
 
 import Controller.SQLite;
 import Model.User;
+import Model.CurrentUserSession;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -200,8 +201,12 @@ public class MgmtUser extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE USER", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
+                sqlite.removeUser(tableModel.getValueAt(table.getSelectedRow(),0).toString());
+                sqlite.addLogs("USER", CurrentUserSession.currentUser, "Deleted "+tableModel.getValueAt(table.getSelectedRow(),0).toString());
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                init();
             }
+            
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 

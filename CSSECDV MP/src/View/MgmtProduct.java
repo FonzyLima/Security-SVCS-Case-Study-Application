@@ -7,11 +7,15 @@ package View;
 
 import Controller.SQLite;
 import Model.Product;
+import Model.CurrentUserSession;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.time.Instant;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -206,8 +210,10 @@ public class MgmtProduct extends javax.swing.JPanel {
                     System.out.println("WRONG QUANTITY");
                 }
                 else{
+                    
                     sqlite.updateProductStock(productSelected, productStock-quantitySelected);
                     System.out.println("PURCHASED "+productSelected);
+                    sqlite.addHistory(CurrentUserSession.currentUser, productSelected, quantitySelected);
                     //tableModel.fireTableDataChanged();
                     //table.repaint();
                 }

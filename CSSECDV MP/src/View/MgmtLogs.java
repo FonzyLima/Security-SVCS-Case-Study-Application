@@ -9,6 +9,7 @@ import Controller.SQLite;
 import Model.Logs;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.time.Instant;
 
 /**
  *

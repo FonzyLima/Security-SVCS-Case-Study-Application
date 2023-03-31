@@ -1,6 +1,8 @@
 package View;
 
 import Controller.Main;
+import Model.User;
+import Model.CurrentUserSession;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -244,9 +246,11 @@ public class Frame extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public void mainNav(){
+    public void mainNav(User user){
         frameView.show(Container, "homePnl");
-     
+        disableSection(user.getRole());
+        CurrentUserSession.currentUser = user.getUsername();
+        CurrentUserSession.role = user.getRole();
     }
     
     public void loginNav(){

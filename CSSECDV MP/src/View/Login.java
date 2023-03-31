@@ -1,7 +1,10 @@
 
 package View;
 import Model.User;
+import Model.CurrentUserSession;
 import Controller.Password;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 public class Login extends javax.swing.JPanel {
 
     public Frame frame;
@@ -139,8 +142,7 @@ public class Login extends javax.swing.JPanel {
                 usernameFld.setText("");
                 passwordFld.setText("");
                 jLabel2.setText("");
-                frame.disableSection(user.getRole());
-                frame.mainNav();
+                frame.mainNav(user);
             }
         }
         else{

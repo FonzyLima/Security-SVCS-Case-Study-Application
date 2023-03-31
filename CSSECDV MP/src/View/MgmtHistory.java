@@ -8,10 +8,12 @@ package View;
 import Controller.SQLite;
 import Model.History;
 import Model.Product;
+import Model.CurrentUserSession;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.time.Instant;
 
 /**
  *
@@ -46,18 +48,38 @@ public class MgmtHistory extends javax.swing.JPanel {
         }
         
 //      LOAD CONTENTS
-        ArrayList<History> history = sqlite.getHistory();
-        for(int nCtr = 0; nCtr < history.size(); nCtr++){
-            Product product = sqlite.getProduct(history.get(nCtr).getName());
-            tableModel.addRow(new Object[]{
-                history.get(nCtr).getUsername(), 
-                history.get(nCtr).getName(), 
-                history.get(nCtr).getStock(), 
-                product.getPrice(), 
-                product.getPrice() * history.get(nCtr).getStock(), 
-                history.get(nCtr).getTimestamp()
-            });
+        if(CurrentUserSession.role==4){
+            ArrayList<History> history = sqlite.getHistory();
+            for(int nCtr = 0; nCtr < history.size(); nCtr++){
+                Product product = sqlite.getProduct(history.get(nCtr).getName());
+                tableModel.addRow(new Object[]{
+                    history.get(nCtr).getUsername(), 
+                    history.get(nCtr).getName(), 
+                    history.get(nCtr).getStock(), 
+                    product.getPrice(), 
+                    product.getPrice() * history.get(nCtr).getStock(), 
+                    history.get(nCtr).getTimestamp()
+                });
+            }
         }
+        else{
+            ArrayList<History> history = sqlite.getHistoryByUser(CurrentUserSession.currentUser);
+            for(int nCtr = 0; nCtr < history.size(); nCtr++){
+                Product product = sqlite.getProduct(history.get(nCtr).getName());
+                tableModel.addRow(new Object[]{
+                    history.get(nCtr).getUsername(), 
+                    history.get(nCtr).getName(), 
+                    history.get(nCtr).getStock(), 
+                    product.getPrice(), 
+                    product.getPrice() * history.get(nCtr).getStock(), 
+                    history.get(nCtr).getTimestamp()
+                });
+            }
+            searchBtn.setVisible(false);
+            
+                
+        }
+        
     }
     
     public void designer(JTextField component, String text){

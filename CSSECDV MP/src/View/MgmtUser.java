@@ -6,6 +6,7 @@
 package View;
 
 import Controller.SQLite;
+import Controller.Password;
 import Model.User;
 import Model.CurrentUserSession;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MgmtUser extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
-    
+    public Password passwordClass = new Password();
     public MgmtUser(SQLite sqlite) {
         initComponents();
         this.sqlite = sqlite;
@@ -192,6 +193,9 @@ public class MgmtUser extends javax.swing.JPanel {
             if(result != null){
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
                 System.out.println(result.charAt(0));
+                sqlite.updateUserRole(tableModel.getValueAt(table.getSelectedRow(), 0).toString(),Character.getNumericValue(result.charAt(0)) );
+                sqlite.addLogs("USER", CurrentUserSession.currentUser, "Updated "+tableModel.getValueAt(table.getSelectedRow(), 0).toString()+" role to "+Character.getNumericValue(result.charAt(0)));
+                init();
             }
         }
     }//GEN-LAST:event_editRoleBtnActionPerformed
@@ -213,15 +217,22 @@ public class MgmtUser extends javax.swing.JPanel {
     private void lockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lockBtnActionPerformed
         if(table.getSelectedRow() >= 0){
             String state = "lock";
+            int locked = 1;
             if("1".equals(tableModel.getValueAt(table.getSelectedRow(), 3) + "")){
                 state = "unlock";
+                locked = 0;
             }
             
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to " + state + " " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE USER", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
-            }
+                
+                sqlite.updateUserLocked(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), locked);
+                sqlite.updateUserAttempts(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 0);
+                sqlite.addLogs("USER", tableModel.getValueAt(table.getSelectedRow(), 0).toString(), state+"ed "+tableModel.getValueAt(table.getSelectedRow(), 0).toString()+"'s Account");
+            } 
+            init();
         }
     }//GEN-LAST:event_lockBtnActionPerformed
 
@@ -231,7 +242,8 @@ public class MgmtUser extends javax.swing.JPanel {
             JTextField confpass = new JPasswordField();
             designer(password, "PASSWORD");
             designer(confpass, "CONFIRM PASSWORD");
-            
+
+            boolean correct = true;
             Object[] message = {
                 "Enter New Password:", password, confpass
             };
@@ -239,8 +251,26 @@ public class MgmtUser extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "CHANGE PASSWORD", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
             
             if (result == JOptionPane.OK_OPTION) {
-                System.out.println(password.getText());
-                System.out.println(confpass.getText());
+                
+                if(!passwordClass.isPasswordStrong(password.getText())){
+                    correct=false;
+                    System.out.println("GEDFD");
+                }
+                //check password match
+                if(!password.getText().equals(confpass.getText())){
+                    correct=false;
+                }
+        
+                if(correct){
+                    sqlite.updateUserPass(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), passwordClass.hashPassword(confpass.getText()));
+                    sqlite.addLogs("USER", tableModel.getValueAt(table.getSelectedRow(), 0).toString(), "Successfully changed password of "+tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                }
+                else{
+                    System.out.println("New Password does not meet requirements");
+                    sqlite.addLogs("USER", tableModel.getValueAt(table.getSelectedRow(), 0).toString(), "Unsuccessfully changed password of "+tableModel.getValueAt(table.getSelectedRow(), 0).toString()+" New Password does not meet requirements");
+                    
+                }
+                init();
             }
         }
     }//GEN-LAST:event_chgpassBtnActionPerformed

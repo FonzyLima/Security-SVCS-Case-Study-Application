@@ -245,7 +245,7 @@ public class MgmtProduct extends javax.swing.JPanel {
             System.out.println(priceFld.getText());
             if(sqlite.getProduct(nameFld.getText()) != null){
                 System.out.println("PRODUCT ALREADY THERE");
-                
+                sqlite.addLogs("Product",CurrentUserSession.currentUser , "Add product failed due to duplication");
             }
             else{
                 if(nameFld.getText().equals("")){

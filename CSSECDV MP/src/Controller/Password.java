@@ -30,18 +30,23 @@ public class Password {
     }
     public boolean isPasswordStrong(String password) {
         if (password.length() < 8) {
+            System.out.println(password.length());
             return false;
         }
         if (!password.matches(".*[A-Z].*")) {
+            System.out.println("sGEDFD");
             return false;
         }
         if (!password.matches(".*[a-z].*")) {
+            System.out.println("aGEDFD");
             return false;
         }
         if (!password.matches(".*\\d.*")) {
+            System.out.println("gGEDFD");
             return false;
         }
         if (!password.matches(".*[@#$%^&+=].*")) {
+            System.out.println("xGEDFD");
             return false;
         }
         return true;

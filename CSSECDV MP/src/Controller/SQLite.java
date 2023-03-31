@@ -243,7 +243,46 @@ public class SQLite {
         }
         return histories;
     }
-    
+    public ArrayList<History> getHistoryByProduct(String prodName){
+        String sql = "SELECT id, username, name, stock, timestamp FROM history WHERE name='" +prodName+ "';";
+        ArrayList<History> histories = new ArrayList<History>();
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {
+                histories.add(new History(rs.getInt("id"),
+                                   rs.getString("username"),
+                                   rs.getString("name"),
+                                   rs.getInt("stock"),
+                                   rs.getString("timestamp")));
+            }
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+        return histories;
+    }
+    public ArrayList<History> getHistoryByUserAndProduct(String username, String prodName){
+        String sql = "SELECT id, username, name, stock, timestamp FROM history WHERE name='" +prodName+ "' AND username='"+username+"';";
+        ArrayList<History> histories = new ArrayList<History>();
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {
+                histories.add(new History(rs.getInt("id"),
+                                   rs.getString("username"),
+                                   rs.getString("name"),
+                                   rs.getInt("stock"),
+                                   rs.getString("timestamp")));
+            }
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+        return histories;
+    }
     
     public ArrayList<Logs> getLogs(){
         String sql = "SELECT id, event, username, desc, timestamp FROM logs";
@@ -264,6 +303,17 @@ public class SQLite {
             ex.printStackTrace();
         }
         return logs;
+    }
+    
+    public void deleteLogs(){
+        String sql = "DELETE FROM logs;";
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()){
+            stmt.execute(sql);
+            
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
     }
     
     public ArrayList<Product> getProduct(){
